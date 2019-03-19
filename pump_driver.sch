@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:MAB19-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -225,8 +226,6 @@ Connection ~ 5150 4750
 Connection ~ 5500 4750
 Wire Wire Line
 	5500 4750 5900 4750
-Wire Wire Line
-	7750 3800 7750 3850
 $Comp
 L Device:D_Small_ALT D4
 U 1 1 5C905EA7
@@ -269,7 +268,6 @@ $EndComp
 Wire Wire Line
 	6650 4750 6650 4850
 Connection ~ 6650 4750
-NoConn ~ 7550 3800
 Wire Wire Line
 	6650 3100 6650 3150
 $Comp
@@ -395,12 +393,7 @@ $EndComp
 Wire Wire Line
 	7750 4200 7750 4350
 Wire Wire Line
-	7750 3850 7750 4000
-Connection ~ 7750 3850
-Wire Wire Line
-	7750 3850 8150 3850
-Wire Wire Line
-	8150 4150 8150 3850
+	8150 4150 8150 4000
 Connection ~ 8150 3850
 Connection ~ 8150 4750
 Wire Wire Line
@@ -489,4 +482,31 @@ Wire Wire Line
 Connection ~ 7025 4750
 Wire Wire Line
 	7025 4750 7750 4750
+$Comp
+L Jumper:SolderJumper_3_Bridged12 JP1
+U 1 1 5C90C600
+P 7650 3850
+F 0 "JP1" H 7650 4055 50  0000 C CNN
+F 1 "SolderJumper_3_Bridged12" H 7650 3964 50  0000 C CNN
+F 2 "Jumper:SolderJumper-3_P1.3mm_Bridged2Bar12_Pad1.0x1.5mm_NumberLabels" H 7650 3850 50  0001 C CNN
+F 3 "~" H 7650 3850 50  0001 C CNN
+	1    7650 3850
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7750 3800 7850 3800
+Wire Wire Line
+	7850 3800 7850 3850
+Wire Wire Line
+	7550 3800 7450 3800
+Wire Wire Line
+	7450 3800 7450 3850
+Wire Wire Line
+	7650 4000 7750 4000
+Wire Wire Line
+	7750 4000 8150 4000
+Connection ~ 7750 4000
+Connection ~ 8150 4000
+Wire Wire Line
+	8150 4000 8150 3850
 $EndSCHEMATC
