@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:MAB19-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -50,7 +51,6 @@ F1 "supplies.sch" 60
 F2 "GND" O R 8800 3250 60 
 F3 "+5V_OUT" O L 7750 3250 60 
 F4 "+18V_IN" I R 8800 3150 60 
-F5 "+18V_OUT" I L 7750 3150 60 
 $EndSheet
 $Sheet
 S 9400 3100 600  450 
@@ -212,13 +212,13 @@ Wire Wire Line
 $Comp
 L Connector:Screw_Terminal_01x02 J1
 U 1 1 5C901A4D
-P 1500 6650
-F 0 "J1" H 1420 6325 50  0000 C CNN
-F 1 "Screw_Terminal_01x02" H 1420 6416 50  0000 C CNN
-F 2 "TerminalBlock:TerminalBlock_bornier-2_P5.08mm" H 1500 6650 50  0001 C CNN
-F 3 "~" H 1500 6650 50  0001 C CNN
-	1    1500 6650
-	-1   0    0    1   
+P 1500 6550
+F 0 "J1" H 1420 6225 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 1420 6316 50  0000 C CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-2_P5.08mm" H 1500 6550 50  0001 C CNN
+F 3 "~" H 1500 6550 50  0001 C CNN
+	1    1500 6550
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
 	1700 6550 2200 6550
