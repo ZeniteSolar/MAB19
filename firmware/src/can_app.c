@@ -104,9 +104,10 @@ void can_app_extractor_mic17_pumps(can_t *msg)
 {
     if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC17)
     {
-      system_flags.pump_on = bit_is_set(msg->data
-        [CAN_MSG_MIC17_PUMPS_PUMPS_BYTE],
-        CAN_MSG_MIC17_PUMPS_PUMP1_BIT);
+        if(bit_is_set(msg->data [CAN_MSG_MIC17_PUMPS_PUMPS_BYTE],CAN_PUMP_BIT_SELF))
+            system_flags.pump_on = 1;
+        else
+            system_flags.pump_on = 0;
     }
 }
 
