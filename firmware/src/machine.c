@@ -110,7 +110,6 @@ inline void print_configurations(void)
 
     VERBOSE_MSG_MACHINE(usart_send_string("\nmachine_f: "));
     VERBOSE_MSG_MACHINE(usart_send_uint16( MACHINE_FREQUENCY ));
-
     VERBOSE_MSG_MACHINE(usart_send_char('\n'));
 }
 
@@ -138,7 +137,7 @@ inline void print_error_flags(void)
 inline void task_initializing(void)
 {
 #ifdef LED_ON
-    set_led(LED2);
+    set_led(LED1);
 #endif
 
     set_machine_initial_state();
@@ -154,7 +153,7 @@ inline void task_idle(void)
 {
 #ifdef LED_ON
     if(led_clk_div++ >= 60){
-        cpl_led(LED2);
+        cpl_led(LED1);
         led_clk_div = 0;
     }
 #endif
@@ -164,13 +163,13 @@ inline void task_idle(void)
 
 
 /**
- * @brief running task checks the system and apply the control action to pwm.
+ * @brief apply the control action to pump.
  */
 inline void task_running(void)
 {
   #ifdef LED_ON
-      if(led_clk_div++ >= 50){
-          cpl_led(LED2);
+      if(led_clk_div++ >= 30){
+          cpl_led(LED1);
           led_clk_div = 0;
       }
   #endif // LED_ON
@@ -178,12 +177,13 @@ inline void task_running(void)
   if(system_flags.pump_on)
   {
     set_pump();
+    set_led(LED2);
   }
   else
   {
     clr_pump();
+    clr_led(LED2);
   }
-
 }
 /**
  * @brief error task checks the system and tries to medicine it.
@@ -311,12 +311,6 @@ inline void machine_run(void)
 ISR(TIMER2_COMPA_vect)
 {
     if(machine_clk_divider++ == MACHINE_CLK_DIVIDER_VALUE){
-       /* if(machine_clk){
-            for(;;){
-        //        pwm_reset();
-                VERBOSE_MSG_ERROR(if(machine_clk) usart_send_string("\nERROR: CLOCK CONFLICT!!!\n"));
-            }
-        }*/
         machine_clk = 1;
         machine_clk_divider = 0;
     }

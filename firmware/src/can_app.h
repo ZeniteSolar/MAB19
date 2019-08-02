@@ -31,16 +31,18 @@ void can_app_extractor_mic17_pumps(can_t *msg);
 void check_can(void);
 
 #ifdef CAN_ON
-#define CAN_APP_SEND_STATE_CLK_DIV  CAN_APP_SEND_STATE_FREQ
-#define CAN_APP_SEND_ADC_CLK_DIV    CAN_APP_SEND_ADC_FREQ
+#define CAN_APP_SEND_STATE_CLK_DIV   CAN_APP_SEND_STATE_FREQ
+#define CAN_APP_SEND_PUMP_CLK_DIV    CAN_APP_SEND_PUMP_FREQ
 #else
 #define CAN_APP_SEND_STATE_CLK_DIV  1
-#define CAN_APP_SEND_ADC_CLK_DIV    1
+#define CAN_APP_SEND_PUMP_CLK_DIV    1
 #endif
 
 #define CAN_APP_CHECKS_WITHOUT_MIC17_MSG  200
 
 // can_app_checks
 uint8_t can_app_checks_without_mic17_msg;
+uint8_t can_app_send_state_clk_div;
+uint8_t can_app_send_pump_clk_div;
 
 #endif /* ifndef CAN_APP_H */

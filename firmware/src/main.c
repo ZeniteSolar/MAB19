@@ -28,9 +28,6 @@ void init(void)
 
     #ifdef CAN_ON
         VERBOSE_MSG_INIT(usart_send_string("CAN (500kbps)..."));
-        #ifdef LED_ON
-        set_led(LED1);
-        #endif
         can_init(BITRATE_500_KBPS);
         //can_set_mode(LOOPBACK_MODE);
         VERBOSE_MSG_INIT(usart_send_string(" OK!\n"));
@@ -64,7 +61,7 @@ void init(void)
     #else
         VERBOSE_MSG_INIT(usart_send_string("SLEEP... OFF!\n"));
     #endif
-can_app_checks_without_mic17_msg = 0;
+
     #ifdef WATCHDOG_ON
         wdt_reset();
     #endif
@@ -91,6 +88,7 @@ can_app_checks_without_mic17_msg = 0;
 
         set_bit(PUMP_DDR, PUMP);
         VERBOSE_MSG_INIT(usart_send_string("Pump... OK!\n"));
+
     #ifdef WATCHDOG_ON
         wdt_reset();
     #endif
@@ -111,9 +109,9 @@ int main(void)
         wdt_reset();
 	#endif
 
-    #ifdef MACHINE_ON
+  #ifdef MACHINE_ON
         machine_run();
-    #endif
+  #endif
 
 	#ifdef SLEEP_ON
         sleep_mode();

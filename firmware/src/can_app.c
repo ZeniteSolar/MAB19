@@ -30,7 +30,7 @@ inline void can_app_print_msg(can_t *msg)
 inline void can_app_task(void)
 {
     check_can();
- /*
+
     if(can_app_send_state_clk_div++ >= CAN_APP_SEND_STATE_CLK_DIV){
 #ifdef USART_ON
         VERBOSE_MSG_CAN_APP(usart_send_string("state msg was sent.\n"));
@@ -39,21 +39,21 @@ inline void can_app_task(void)
         can_app_send_state_clk_div = 0;
     }
 
-    if(can_app_send_pump_clk_div++ >= CAN_APP_SEND_PUMP)
+    if(can_app_send_pump_clk_div++ >= CAN_APP_SEND_PUMP_CLK_DIV)
     {
-    #ifdef USART_ON
+#ifdef USART_ON
       VERBOSE_MSG_CAN_APP(usart_send_string("pump msg was sent.\n"));
-    #endif
-    can_app_send_pump();
-    can_app_send_pump_clk_div = 0;
-  }
-*/
+#endif
+      can_app_send_pump();
+      can_app_send_pump_clk_div = 0;
+    }
+
 }
 
 inline void can_app_send_state(void)
 {
     can_t msg;
-    msg.id                                  = CAN_FILTER_MSG_MAM17_STATE;
+    msg.id                                  = CAN_FILTER_MSG_MAB17_STATE;
     msg.length                              = CAN_LENGTH_MSG_STATE;
     msg.flags.rtr = 0;
 
@@ -67,18 +67,27 @@ inline void can_app_send_state(void)
 #endif
 }
 
+/**
+ * @brief send a pump message
+ */
 inline void can_app_send_pump(void)
 {
     can_t msg;
-    msg.id                                 = CAN_FILTER_MSG_MAM17_STATE;
-    msg.length                              = CAN_LENGTH_MSG_STATE;
+    msg.id                                 = CAN_FILTER_MSG_MAB17_PUMPS;
+    msg.length                             = CAN_LENGTH_MSG_STATE;
     msg.flags.rtr                          = 0;
 
     msg.data[CAN_SIGNATURE_BYTE]           = CAN_SIGNATURE_SELF;
-    // Incluir status das bombas
+    msg.data[CAN_MSG_MAB17_PUMP1_BIT]      = system_flags.pump_on;
     can_send_message(&msg);
+#ifdef VERBOSE_MSG_CAN_APP
+    VERBOSE_MSG_CAN_APP(can_app_print_msg(&msg));
+#endif
 }
 
+/**
+ * @brief extract a state message from mic17
+ */
 void can_app_extractor_mic17_state(can_t *msg)
 {
     if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC17){

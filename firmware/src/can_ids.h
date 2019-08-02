@@ -1,4 +1,4 @@
-/**
+ /**
  * @file can_ids.h
  *
  * @defgroup CANAPP    Ids for can application
@@ -39,7 +39,7 @@
 #define CAN_SIGNATURE_MSC19_4           253
 #define CAN_SIGNATURE_MSC19_5           254
 
-#define CAN_SIGNATURE_SELF              CAN_SIGNATURE_MVC19
+#define CAN_SIGNATURE_SELF              CAN_SIGNATURE_MAB17
 
 //------------------------------------------------------------------------------
 
@@ -65,10 +65,10 @@
 #define CAN_LENGTH_MSG_MIC17_MOTOR          4
 #define CAN_MSG_MIC17_MOTOR_MOTOR_ON_BYTE   1
 #define CAN_MSG_MIC17_MOTOR_MOTOR_ON_BIT    0
-#define CAN_MSG_MIC17_MOTOR_DMS_BYTE    	1
-#define CAN_MSG_MIC17_MOTOR_DMS_BIT      	1
+#define CAN_MSG_MIC17_MOTOR_DMS_BYTE    	  1
+#define CAN_MSG_MIC17_MOTOR_DMS_BIT      	  1
 #define CAN_MSG_MIC17_MOTOR_D_RAW_BYTE	    2
-#define CAN_MSG_MIC17_MOTOR_I_RAW_BYTE		3
+#define CAN_MSG_MIC17_MOTOR_I_RAW_BYTE		  3
 
 // MESSAGES FROM MIC17 TO MAB17:
 #define CAN_LENGTH_MSG_MIC17_PUMPS          2
@@ -95,9 +95,9 @@
 #define CAN_FILTER_MSG_MAM17_MOTOR      0b00000010001   //<! Informs about motor
 
 // MAM17 MOTOR:
-#define CAN_LENGTH_MSG_MAM17_MOTOR      3
-#define CAN_MSG_MAM17_MOTOR_D_BYTE      1
-#define CAN_MSG_MAM17_MOTOR_LIM_BYTE    2
+#define CAN_LENGTH_MSG_MAM17_MOTOR         3
+#define CAN_MSG_MAM17_MOTOR_D_BYTE         1
+#define CAN_MSG_MAM17_MOTOR_LIM_BYTE       2
 
 //------------------------------------------------------------------------------
 
@@ -106,11 +106,11 @@
 #define CAN_FILTER_MSG_MAB17_PUMPS      0b00001000001   //<! Informs about pumps
 
 // MESSAGES FROM MIC17 TO MAM17:
-#define CAN_LENGTH_MSG_MAB17_PUMPS      2
-#define CAN_MSG_MAB17_PUMPS_BYTE        1
-#define CAN_MSG_MAB17_PUMP1_BIT         0
-#define CAN_MSG_MAB17_PUMP2_BIT         1
-#define CAN_MSG_MAB17_PUMP3_BIT         2
+#define CAN_LENGTH_MSG_MAB17_PUMPS         2
+#define CAN_MSG_MAB17_PUMPS_BYTE           1
+#define CAN_MSG_MAB17_PUMP1_BIT            0
+#define CAN_MSG_MAB17_PUMP2_BIT            1
+#define CAN_MSG_MAB17_PUMP3_BIT            2
 
 //------------------------------------------------------------------------------
 
