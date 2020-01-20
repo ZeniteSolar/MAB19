@@ -53,7 +53,7 @@ inline void can_app_task(void)
 inline void can_app_send_state(void)
 {
     can_t msg;
-    msg.id                                  = CAN_FILTER_MSG_MAB17_STATE;
+    msg.id                                  = CAN_MSG_MAB19_STATE_ID;
     msg.length                              = CAN_LENGTH_MSG_STATE;
     msg.flags.rtr = 0;
 
@@ -73,12 +73,12 @@ inline void can_app_send_state(void)
 inline void can_app_send_pump(void)
 {
     can_t msg;
-    msg.id                                 = CAN_FILTER_MSG_MAB17_PUMPS;
+    msg.id                                 = CAN_MSG_MAB19_PUMPS_ID;
     msg.length                             = CAN_LENGTH_MSG_STATE;
     msg.flags.rtr                          = 0;
 
     msg.data[CAN_SIGNATURE_BYTE]           = CAN_SIGNATURE_SELF;
-    msg.data[CAN_MSG_MAB17_PUMP1_BIT]      = system_flags.pump_on;
+    msg.data[CAN_MSG_MAB19_PUMPS_PUMPS_PUMP1_BIT]      = system_flags.pump_on;
     can_send_message(&msg);
 #ifdef VERBOSE_MSG_CAN_APP
     VERBOSE_MSG_CAN_APP(can_app_print_msg(&msg));
@@ -90,7 +90,7 @@ inline void can_app_send_pump(void)
  */
 void can_app_extractor_mic17_state(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC17){
+    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
         if(msg->data[CAN_STATE_MSG_ERROR_BYTE]){
             //ERROR!!!
         }
@@ -102,9 +102,9 @@ void can_app_extractor_mic17_state(can_t *msg)
  */
 void can_app_extractor_mic17_pumps(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC17)
+    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19)
     {
-        if(bit_is_set(msg->data [CAN_MSG_MIC17_PUMPS_PUMPS_BYTE],CAN_PUMP_BIT_SELF))
+        if(bit_is_set(msg->data [CAN_MSG_MIC19_PUMPS_PUMPS_BYTE],CAN_PUMP_BIT_SELF))
             system_flags.pump_on = 1;
         else
             system_flags.pump_on = 0;
@@ -117,21 +117,21 @@ void can_app_extractor_mic17_pumps(can_t *msg)
  */
 inline void can_app_msg_extractors_switch(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC17){
+    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
         can_app_checks_without_mic17_msg = 0;
         switch(msg->id)
         {
-            case CAN_FILTER_MSG_MIC17_STATE:
+            case CAN_MSG_MIC19_STATE_ID:
             #ifdef USART_ON
-                VERBOSE_MSG_CAN_APP(usart_send_string(" got a state msg from MIC17: "));
+                VERBOSE_MSG_CAN_APP(usart_send_string(" got a state msg from MIC19: "));
             #endif
                 VERBOSE_MSG_CAN_APP(can_app_print_msg(msg));
                 can_app_extractor_mic17_state(msg);
                 break;
 
-            case CAN_FILTER_MSG_MIC17_PUMPS:
+            case CAN_MSG_MIC19_PUMPS_ID:
             #ifdef USART_ON
-                VERBOSE_MSG_CAN_APP(usart_send_string(" got a pump msg from MIC17: "));
+                VERBOSE_MSG_CAN_APP(usart_send_string(" got a pump msg from MIC19: "));
             #endif
                 VERBOSE_MSG_CAN_APP(can_app_print_msg(msg));
                 can_app_extractor_mic17_pumps(msg);
@@ -139,12 +139,12 @@ inline void can_app_msg_extractors_switch(can_t *msg)
 
             default:
             #ifdef USART_ON
-                VERBOSE_MSG_CAN_APP(usart_send_string(" got a unknown msg from MIC17"));
+                VERBOSE_MSG_CAN_APP(usart_send_string(" got a unknown msg from MIC19"));
             #endif
                 VERBOSE_MSG_CAN_APP(can_app_print_msg(msg));
                 break;
         }
-    } // CAN_SIGNATURE_MIC17
+    } // CAN_SIGNATURE_MIC19
 }
 
 /**
@@ -153,12 +153,12 @@ inline void can_app_msg_extractors_switch(can_t *msg)
 inline void check_can(void)
 {
     // If no messages is received from mic17 for
-    // CAN_APP_CHECKS_WITHOUT_MIC17_MSG cycles, than it go to a specific error state.
+    // CAN_APP_CHECKS_WITHOUT_MIC19_MSG cycles, than it go to a specific error state.
     //VERBOSE_MSG_CAN_APP(usart_send_string("checks: "));
     //VERBOSE_MSG_CAN_APP(usart_send_uint16(can_app_checks_without_mic17_msg));
 
 #ifdef CAN_DEPENDENT
-      if(can_app_checks_without_mic17_msg++ >= CAN_APP_CHECKS_WITHOUT_MIC17_MSG){
+      if(can_app_checks_without_mic17_msg++ >= CAN_APP_CHECKS_WITHOUT_MIC19_MSG){
 #ifdef USART_ON
         VERBOSE_MSG_CAN_APP(usart_send_string("Error: too many cycles without message.\n"));
 #endif

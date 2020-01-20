@@ -52,8 +52,8 @@
 
 #endif //ADC_ON
 
-#define CAN_SIGNATURE_SELF              CAN_SIGNATURE_MAB17
-#define CAN_PUMP_BIT_SELF				(CAN_MSG_MIC17_PUMPS_PUMP2_BIT)
+#define CAN_SIGNATURE_SELF              CAN_SIGNATURE_MAB19
+#define CAN_PUMP_BIT_SELF				(CAN_MSG_MIC19_PUMPS_PUMPS_PUMP2_BIT)
 
 #ifdef MACHINE_ON
 // The machine frequency may not be superior of ADC_FREQUENCY/ADC_AVG_SIZE_10
