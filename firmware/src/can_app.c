@@ -54,12 +54,12 @@ inline void can_app_send_state(void)
 {
     can_t msg;
     msg.id                                  = CAN_MSG_MAB19_STATE_ID;
-    msg.length                              = CAN_LENGTH_MSG_STATE;
+    msg.length                              = CAN_MSG_GENERIC_STATE_LENGTH;
     msg.flags.rtr = 0;
 
-    msg.data[CAN_SIGNATURE_BYTE]            = CAN_SIGNATURE_SELF;
-    msg.data[CAN_STATE_MSG_STATE_BYTE]      = (uint8_t) state_machine;
-    msg.data[CAN_STATE_MSG_ERROR_BYTE]      = error_flags.all;
+    msg.data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE]            = CAN_SIGNATURE_SELF;
+    msg.data[CAN_MSG_GENERIC_STATE_STATE_BYTE]      = (uint8_t) state_machine;
+    msg.data[CAN_MSG_GENERIC_STATE_ERROR_BYTE]      = error_flags.all;
 
     can_send_message(&msg);
 #ifdef VERBOSE_MSG_CAN_APP
@@ -74,10 +74,10 @@ inline void can_app_send_pump(void)
 {
     can_t msg;
     msg.id                                 = CAN_MSG_MAB19_PUMPS_ID;
-    msg.length                             = CAN_LENGTH_MSG_STATE;
+    msg.length                             = CAN_MSG_GENERIC_STATE_LENGTH;
     msg.flags.rtr                          = 0;
 
-    msg.data[CAN_SIGNATURE_BYTE]           = CAN_SIGNATURE_SELF;
+    msg.data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE]           = CAN_SIGNATURE_SELF;
     msg.data[CAN_MSG_MAB19_PUMPS_PUMPS_PUMP1_BIT]      = system_flags.pump_on;
     can_send_message(&msg);
 #ifdef VERBOSE_MSG_CAN_APP
@@ -90,8 +90,8 @@ inline void can_app_send_pump(void)
  */
 void can_app_extractor_mic17_state(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
-        if(msg->data[CAN_STATE_MSG_ERROR_BYTE]){
+    if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
+        if(msg->data[CAN_MSG_GENERIC_STATE_ERROR_BYTE]){
             //ERROR!!!
         }
     }
@@ -102,7 +102,7 @@ void can_app_extractor_mic17_state(can_t *msg)
  */
 void can_app_extractor_mic17_pumps(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19)
+    if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19)
     {
         if(bit_is_set(msg->data [CAN_MSG_MIC19_PUMPS_PUMPS_BYTE],CAN_PUMP_BIT_SELF))
             system_flags.pump_on = 1;
@@ -117,7 +117,7 @@ void can_app_extractor_mic17_pumps(can_t *msg)
  */
 inline void can_app_msg_extractors_switch(can_t *msg)
 {
-    if(msg->data[CAN_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
+    if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
         can_app_checks_without_mic17_msg = 0;
         switch(msg->id)
         {
