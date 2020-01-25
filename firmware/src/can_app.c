@@ -86,9 +86,9 @@ inline void can_app_send_pump(void)
 }
 
 /**
- * @brief extract a state message from mic17
+ * @brief extract a state message from mic19
  */
-void can_app_extractor_mic17_state(can_t *msg)
+void can_app_extractor_mic19_state(can_t *msg)
 {
     if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
         if(msg->data[CAN_MSG_GENERIC_STATE_ERROR_BYTE]){
@@ -98,9 +98,9 @@ void can_app_extractor_mic17_state(can_t *msg)
 }
 
 /**
- * @brief extract a pump message from mic17
+ * @brief extract a pump message from mic19
  */
-void can_app_extractor_mic17_pumps(can_t *msg)
+void can_app_extractor_mic19_pumps(can_t *msg)
 {
     if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19)
     {
@@ -118,7 +118,7 @@ void can_app_extractor_mic17_pumps(can_t *msg)
 inline void can_app_msg_extractors_switch(can_t *msg)
 {
     if(msg->data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE] == CAN_SIGNATURE_MIC19){
-        can_app_checks_without_mic17_msg = 0;
+        can_app_checks_without_mic19_msg = 0;
         switch(msg->id)
         {
             case CAN_MSG_MIC19_STATE_ID:
@@ -126,7 +126,7 @@ inline void can_app_msg_extractors_switch(can_t *msg)
                 VERBOSE_MSG_CAN_APP(usart_send_string(" got a state msg from MIC19: "));
             #endif
                 VERBOSE_MSG_CAN_APP(can_app_print_msg(msg));
-                can_app_extractor_mic17_state(msg);
+                can_app_extractor_mic19_state(msg);
                 break;
 
             case CAN_MSG_MIC19_PUMPS_ID:
@@ -134,7 +134,7 @@ inline void can_app_msg_extractors_switch(can_t *msg)
                 VERBOSE_MSG_CAN_APP(usart_send_string(" got a pump msg from MIC19: "));
             #endif
                 VERBOSE_MSG_CAN_APP(can_app_print_msg(msg));
-                can_app_extractor_mic17_pumps(msg);
+                can_app_extractor_mic19_pumps(msg);
                 break;
 
             default:
@@ -152,17 +152,17 @@ inline void can_app_msg_extractors_switch(can_t *msg)
  */
 inline void check_can(void)
 {
-    // If no messages is received from mic17 for
+    // If no messages is received from mic19 for
     // CAN_APP_CHECKS_WITHOUT_MIC19_MSG cycles, than it go to a specific error state.
     //VERBOSE_MSG_CAN_APP(usart_send_string("checks: "));
-    //VERBOSE_MSG_CAN_APP(usart_send_uint16(can_app_checks_without_mic17_msg));
+    //VERBOSE_MSG_CAN_APP(usart_send_uint16(can_app_checks_without_mic19_msg));
 
 #ifdef CAN_DEPENDENT
-      if(can_app_checks_without_mic17_msg++ >= CAN_APP_CHECKS_WITHOUT_MIC19_MSG){
+      if(can_app_checks_without_mic19_msg++ >= CAN_APP_CHECKS_WITHOUT_MIC19_MSG){
 #ifdef USART_ON
         VERBOSE_MSG_CAN_APP(usart_send_string("Error: too many cycles without message.\n"));
 #endif
-        can_app_checks_without_mic17_msg = 0;
+        can_app_checks_without_mic19_msg = 0;
         error_flags.no_canbus = 1;
         set_state_error();
       }

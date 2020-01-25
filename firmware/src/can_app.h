@@ -25,8 +25,8 @@ void can_app_send_pump(void);
 
 void can_app_msg_extractors_switch(can_t *msg);
 
-void can_app_extractor_mic17_state(can_t *msg);
-void can_app_extractor_mic17_pumps(can_t *msg);
+void can_app_extractor_mic19_state(can_t *msg);
+void can_app_extractor_mic19_pumps(can_t *msg);
 
 void check_can(void);
 
@@ -41,7 +41,7 @@ void check_can(void);
 #define CAN_APP_CHECKS_WITHOUT_MIC19_MSG  200
 
 // can_app_checks
-uint8_t can_app_checks_without_mic17_msg;
+uint8_t can_app_checks_without_mic19_msg;
 uint8_t can_app_send_state_clk_div;
 uint8_t can_app_send_pump_clk_div;
 
