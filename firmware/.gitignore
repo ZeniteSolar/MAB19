@@ -76,3 +76,5 @@ dkms.conf
 #keys
 settings/keys
 
+# can_ids:
+src/can_ids.h**
